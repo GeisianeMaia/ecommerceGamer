@@ -1,7 +1,17 @@
+import Page from "@/components/layout/Page";
+import products from "@/data/constants/products";
+import ProductList from "@/components/catalog/ProductList";
+import SearchBar from "@/components/catalog/SearchBar";
+
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      home
-    </div>
+    <Page>
+      <SearchBar />
+      <div className="flex gap-5 justify-center flex-wrap">
+        {products.map((product) => (
+          <ProductList key={product.id} product={product} />
+        ))}
+      </div>
+    </Page>
   );
 }
