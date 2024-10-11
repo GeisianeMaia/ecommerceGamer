@@ -1,31 +1,48 @@
-"use client";
+"use client"; 
 import { useState } from "react";
 import Page from "@/components/layout/Page";
 import products from "@/data/constants/products";
 import ProductList from "@/components/catalog/ProductList";
 import SearchBar from "@/components/catalog/SearchBar";
 import FilterProduct from "@/components/catalog/FilterProduct";
+import Pagination from "@/components/catalog/Pagination";
+import Product from "@/data/model/Product";
 
 export default function Home() {
-  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const PAGE_SIZE = 2;
 
   const handleSearch = (searchTerm: string) => {
     const filtered = products.filter(
-      (product) =>
+      (product: Product) =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         product.description.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredProducts(filtered);
+    setCurrentPage(0);
   };
 
   const handleFilter = (selectedCategories: string[], minPrice: number, maxPrice: number) => {
-    const filtered = products.filter((product) => {
+    const filtered = products.filter((product: Product) => {
       const matchesCategory =
         selectedCategories.length === 0 || selectedCategories.includes(product.category);
       const matchesPrice = product.price >= minPrice && product.price <= maxPrice;
       return matchesCategory && matchesPrice;
     });
     setFilteredProducts(filtered);
+    setCurrentPage(0);
+  };
+
+  const totalProducts = filteredProducts.length;
+
+  const currentProducts = filteredProducts.slice(
+    currentPage * PAGE_SIZE,
+    (currentPage + 1) * PAGE_SIZE
+  );
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -39,9 +56,9 @@ export default function Home() {
             <SearchBar onSearch={handleSearch} />
           </div>
           <div className="flex gap-5 justify-start flex-wrap">
-            {filteredProducts.length > 0 ? (
-              filteredProducts.map((product) => (
-                <ProductList key={product.id} product={product} />
+            {currentProducts.length > 0 ? (
+              currentProducts.map((product: Product) => (
+                <ProductList key={product.id} product={product} productsPerPage={PAGE_SIZE} />
               ))
             ) : (
               <div className="flex items-center justify-center w-full min-h-screen">
@@ -53,6 +70,11 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <Pagination 
+        totalItems={totalProducts} 
+        currentPage={currentPage} 
+        onPageChange={handlePageChange} 
+      />
     </Page>
   );
 }
