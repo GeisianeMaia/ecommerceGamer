@@ -1,3 +1,4 @@
+// SearchBar.tsx
 "use client";
 import { IconSearch } from "@tabler/icons-react";
 import { useState } from "react";
@@ -17,7 +18,7 @@ export default function SearchBar({ onSearch }: { onSearch: (searchTerm: string)
 
   return (
     <form
-      className="flex justify-between gap-4 bg-white border border-gray-300 p-2 rounded-md flex-1 max-w-md mx-auto"
+      className="flex justify-between gap-2 bg-white border border-gray-300 p-2 rounded-md flex-1 max-w-full md:max-w-[50%]"
       onSubmit={handleSearch}
     >
       <button className="flex items-center gap-2 bg-transparent outline-none">
