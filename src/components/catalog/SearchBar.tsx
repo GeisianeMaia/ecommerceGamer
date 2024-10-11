@@ -1,4 +1,3 @@
-// SearchBar.tsx
 "use client";
 import { IconSearch } from "@tabler/icons-react";
 import { useState } from "react";
