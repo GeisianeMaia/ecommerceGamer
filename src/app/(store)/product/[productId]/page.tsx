@@ -5,7 +5,6 @@ import products from '@/data/constants/products';
 
 const Product = () => {
   const { productId } = useParams();
-
   const product = products.find((p) => p.id === Number(productId));
 
   if (!product) {

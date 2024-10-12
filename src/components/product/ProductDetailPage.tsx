@@ -1,3 +1,6 @@
+'use client'
+
+import useCart from "@/data/hooks/useCart";
 import Product from "@/data/model/Product"
 import { IconShoppingCart } from "@tabler/icons-react";
 import Image from "next/image";
@@ -7,6 +10,7 @@ export interface ProductCardProps {
 }
 
 export default function ProductDetailPage(props: ProductCardProps){
+  const {add} = useCart()
   const { name, price, image, description } = props.product;
   return(
     <div className="max-w-full p-12 flex justify-center">
@@ -25,7 +29,7 @@ export default function ProductDetailPage(props: ProductCardProps){
           <div className="w-1/2 flex flex-col justify-start pl-4">
             <h2 className="text-5xl font-semibold text-blue-600">{`R$ ${price.toFixed(2)}`}</h2>
             <p className="text-lg text-black mt-2">*Frete grátis para compras acima de R$900,00</p>
-            <button className="mt-4 max-w-[350px] px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition flex items-center justify-center">
+            <button onClick={() => add(props.product)} className="mt-4 max-w-[350px] px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition flex items-center justify-center">
               Adicionar ao carrinho
               <IconShoppingCart size={24} stroke={1} className="ml-2" />
             </button>

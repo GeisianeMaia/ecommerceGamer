@@ -76,5 +76,6 @@ export default function Home() {
         onPageChange={handlePageChange} 
       />
     </Page>
+    
   );
 }

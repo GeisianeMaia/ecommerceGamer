@@ -1,7 +1,11 @@
+'use client'
+
+import useCart from '@/data/hooks/useCart'
 import { IconShoppingCart } from '@tabler/icons-react'
 import Link from 'next/link'
 
 export default function Cart() {
+    const {qtdeItems} = useCart()
     return (
         <Link href="/cart">
             <div className="flex relative">
@@ -11,7 +15,7 @@ export default function Cart() {
                         absolute -top-1 -right-1 w-4 h-4 bg-blue-600 rounded-full
                         flex justify-center items-center text-xs
                     "
-                >4
+                >{qtdeItems}
                 </div>
             </div>
         </Link>
